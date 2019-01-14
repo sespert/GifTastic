@@ -1,0 +1,21 @@
+body {
+    background-image: url("../images/Sports.png");
+}
+
+.container {
+    height: 100%;   
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-variant: small-caps;
+    
+}
+
+h2 {
+    font-size: 60px;
+}
+#footer {
+    background-color:black;
+    font-family: 'Georgia', Times, Times New Roman, serif; 
+    color: #ffffff;  
+    height: 50px;
+   
+}
