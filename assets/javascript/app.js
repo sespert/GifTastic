@@ -8,10 +8,13 @@ $(function() {
         newButton.text(topics[j]);
         $("#buttons").append(newButton);
     }
+
+
+
     //Function that generates 10 gif when user clicks on each button
-    function gifGenerator(input) {   
+    function gifGenerator(input,num) {   
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-            input + "&api_key=n7jEtPuLzxf0OwIPVxFriNLrCeMwrDRD&limit=10";
+            input + "&api_key=n7jEtPuLzxf0OwIPVxFriNLrCeMwrDRD&limit=10&offset=" + num;
         
         $.ajax({
             url: queryURL,
@@ -32,33 +35,48 @@ $(function() {
                 gifDiv.append(gifImage);
                 gifDiv.append(p);                
                 $("#giphys").prepend(gifDiv);
-
-                //When user clicks on each gif, it starts and it pause when click again
-                $(".gif").on("click", function() {
-                    var state = $(this).attr("data-state");
-
-                    if (state === "still") {
-                        console.log("still");
-                        var urlAnimate = $(this).attr("data-animate");
-                        $(this).attr("src", urlAnimate);   
-                        $(this).attr("data-state", "animate");
-                    }   else if (state === "animate") {
-                        console.log("animate");
-                        var urlStill = $(this).attr("data-still");
-                        $(this).attr("src", urlStill);
-                        $(this).attr("data-state", "still");
-                    }                     
-                });
             }
         });
     }
    
     //Function that calls the gifGenerator function when each button is called
-   $("button").on("click", function() {
-        //Before showing the gifs, clean the screen from previous gifs
+   $(".sportSelected").on("click", function() {
+        
+        //In order for the gifs to be different, we add the offset variable in the queryURL call
+        var offset = 0;
+        
+        //Before showing the gifs, clean the screen from previous gifs        
         $("#giphys").empty();
-        gifGenerator($(this).attr("data-sport"));
+        gifGenerator($(this).attr("data-sport"), offset);
+
+        //If user wants more gifs, he can click the Add More Gifs Button so the 
+        //gifGenerator function is called again, with the same value of the sport selected
+        var sportInput = $(this).attr("data-sport");
+
+        $("#moreGifs").on("click", function() {
+            offset=offset+10;
+            gifGenerator(sportInput, offset);
+        });
+
+        
+       
+        
    });
+
+   //When user clicks on each gif, it starts and it pause when click again
+   $(document).on("click", ".gif", function() {
+    var state = $(this).attr("data-state");
+
+        if (state === "still") {
+            var urlAnimate = $(this).attr("data-animate");
+            $(this).attr("src", urlAnimate);   
+            $(this).attr("data-state", "animate");
+        }   else if (state === "animate") {
+            var urlStill = $(this).attr("data-still");
+            $(this).attr("src", urlStill);
+            $(this).attr("data-state", "still");
+        }                     
+    });
 
    //If user wants to add a new topic, take the input of the submit form and generate a new button to be clicked
    $("#select-sport").on("click", function() {        
@@ -68,12 +86,28 @@ $(function() {
     userButton.text(userSport);
     $("#buttons").append(userButton);
     
-        $("button").on("click", function() {
+        $(".sportSelected").on("click", function() {
+            var offset = 0;
             $("#giphys").empty();
-            gifGenerator($(this).attr("data-sport"));
+            gifGenerator($(this).attr("data-sport"), offset);
+
+            var sportInput = $(this).attr("data-sport");
+        
+            $("#moreGifs").on("click", function() {
+                offset=offset+10;
+                gifGenerator(sportInput, offset);
+            });
         });
 
+        
+       
+
     })
-})
+
+   
+
+    
+
+});
 
 
