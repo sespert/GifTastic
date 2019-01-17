@@ -26,7 +26,7 @@ $(function() {
                //...then create divs for each new gif 
                 var gifDiv = $('<div class="col-md-4">');
                 var p = $("<p>");
-                p.text(results[i].rating);
+                p.text("Rated: " + results[i].rating);
                 var gifImage = $('<img class="gif">');
                 gifImage.attr("src", results[i].images.fixed_height_still.url);
                 gifImage.attr("data-still", results[i].images.fixed_height_still.url);
