@@ -25,6 +25,8 @@ $(function() {
             for (var i = 0; i < results.length; i++) {
                //...then create divs for each new gif 
                 var gifDiv = $('<div class="col-md-4">');
+                var h4 = $("<h4>")
+                h4.text("Title: " + results[i].title);
                 var p = $("<p>");
                 p.text("Rated: " + results[i].rating);
                 var gifImage = $('<img class="gif">');
@@ -33,6 +35,7 @@ $(function() {
                 gifImage.attr("data-animate", results[i].images.fixed_height.url);
                 gifImage.attr("data-state", "still");
                 gifDiv.append(gifImage);
+                gifDiv.append(h4);
                 gifDiv.append(p);                
                 $("#giphys").prepend(gifDiv);
             }
